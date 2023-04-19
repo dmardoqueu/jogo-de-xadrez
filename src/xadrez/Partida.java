@@ -6,6 +6,14 @@ import xadrez.pecas.Rei;
 import xadrez.pecas.Torre;
 
 public class Partida {
+
+// R = RAINHA
+// C = CAVALO
+// K = REI (KING)
+// P = PEÃO
+// T = TORRE
+// B = BISPO
+
     private Tabuleiro tabuleiro;
 
     public Partida() {
