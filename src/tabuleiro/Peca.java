@@ -12,6 +12,4 @@ public class Peca {
     protected Tabuleiro getTabuleiro() {
         return tabuleiro;
     }
-
-
 }
