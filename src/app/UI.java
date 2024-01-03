@@ -6,8 +6,11 @@ import xadrez.PecaDeXadrez;
 import xadrez.PosicaoDeXadrez;
 
 
+import java.util.Arrays;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public interface UI {
 
@@ -48,21 +51,23 @@ public interface UI {
         }
     }
 
-    public static void imprimirPartida(Partida partida) {
+    public static void imprimirPartida(Partida partida, List<PecaDeXadrez> capturadas) {
         imprimirTabuleiro(partida.getPecas());
+        System.out.println();
+        imprimirPecasCapturadas(capturadas);
         System.out.println();
         System.out.println("Turno: " + partida.getTurno());
         System.out.println("Aguardando jogador: " + partida.getJogadorAtual());
     }
 
     public static void imprimirTabuleiro(PecaDeXadrez[][] pecas) {
-        System.out.println(" R = RAINHA\n" +
-                " C = CAVALO\n" +
-                " K = REI (KING)\n" +
-                " P = PEÃO\n" +
-                " T = TORRE\n" +
-                " B = BISPO");
-        System.out.println();
+//        System.out.println(" R = RAINHA\n" +
+//                " C = CAVALO\n" +
+//                " K = REI (KING)\n" +
+//                " P = PEÃO\n" +
+//                " T = TORRE\n" +
+//                " B = BISPO");
+//        System.out.println();
 
         for (int i = 0; i < pecas.length; i++) {
             System.out.print((8 - i) + "  ");
@@ -75,13 +80,13 @@ public interface UI {
     }
 
     public static void imprimirTabuleiro(PecaDeXadrez[][] pecas, boolean[][] movimentosPossiveis) {
-        System.out.println(" R = RAINHA\n" +
-                " C = CAVALO\n" +
-                " K = REI (KING)\n" +
-                " P = PEÃO\n" +
-                " T = TORRE\n" +
-                " B = BISPO");
-        System.out.println();
+//        System.out.println(" R = RAINHA\n" +
+//                " C = CAVALO\n" +
+//                " K = REI (KING)\n" +
+//                " P = PEÃO\n" +
+//                " T = TORRE\n" +
+//                " B = BISPO");
+//        System.out.println();
 
         for (int i = 0; i < pecas.length; i++) {
             System.out.print((8 - i) + "  ");
@@ -109,5 +114,19 @@ public interface UI {
             }
         }
         System.out.print(" ");
+    }
+
+    private static void imprimirPecasCapturadas(List<PecaDeXadrez> capturadas) {
+        List<PecaDeXadrez> brancas = capturadas.stream().filter(x -> x.getCor() == Cor.BRANCO).collect(Collectors.toList());
+        List<PecaDeXadrez> pretas = capturadas.stream().filter(x -> x.getCor() == Cor.PRETO).collect(Collectors.toList());
+        System.out.println("Peças capturadas: ");
+        System.out.print("Brancas: ");
+        System.out.print(ANSI_WHITE);
+        System.out.println(Arrays.toString(brancas.toArray()));
+        System.out.print(ANSI_RESET);
+        System.out.print("Pretas: ");
+        System.out.print(ANSI_YELLOW);
+        System.out.println(Arrays.toString(pretas.toArray()));
+        System.out.print(ANSI_RESET);
     }
 }
