@@ -8,6 +8,7 @@ import xadrez.pecas.Torre;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Partida {
 
@@ -21,6 +22,7 @@ public class Partida {
     private Tabuleiro tabuleiro;
     private int turno;
     private Cor jogadorAtual;
+    private boolean check;
 
     private List<Peca> pecasNoTabuleiro = new ArrayList<>();
     private List<Peca> pecasCapturadas = new ArrayList<>();
@@ -78,6 +80,17 @@ public class Partida {
         return pecaCapturada;
     }
 
+    private void desfazerMovimento(Posicao inicial, Posicao alvo, Peca pecaCapturada) {
+        Peca p = tabuleiro.removerPeca(alvo);
+        tabuleiro.lugarDaPeca(p, inicial);
+
+        if (pecaCapturada != null) {
+            tabuleiro.lugarDaPeca(pecaCapturada, alvo);
+            pecasCapturadas.remove(pecaCapturada);
+            pecasNoTabuleiro.add(pecaCapturada);
+        }
+    }
+
     public void validarPosicaoInicial(Posicao posicao) {
         if (!tabuleiro.temPeca(posicao)) {
             throw new XadrezException("Não existe peça na posição de origem.");
@@ -99,6 +112,20 @@ public class Partida {
     public void proximoTurno() {
         turno++;
         jogadorAtual = (jogadorAtual == Cor.BRANCO) ? Cor.PRETO : Cor.BRANCO;
+    }
+
+    private Cor oponente(Cor cor) {
+        return (cor == Cor.BRANCO) ? Cor.PRETO : Cor.BRANCO;
+    }
+
+    private PecaDeXadrez rei(Cor cor) {
+        List<Peca> lista = pecasNoTabuleiro.stream().filter(x -> ((PecaDeXadrez)x).getCor() == cor).collect(Collectors.toList());
+        for (Peca p : lista) {
+            if (p instanceof Rei) {
+                return (PecaDeXadrez)p;
+            }
+        }
+        throw new IllegalStateException("Não existe um rei da cor " + cor + " no tabuleiro.");
     }
 
     private void colocarNovaPeca(char coluna, int linha, PecaDeXadrez peca) {
