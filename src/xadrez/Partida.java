@@ -3,6 +3,7 @@ package xadrez;
 import tabuleiro.Peca;
 import tabuleiro.Posicao;
 import tabuleiro.Tabuleiro;
+import xadrez.pecas.Bispo;
 import xadrez.pecas.Peao;
 import xadrez.pecas.Rei;
 import xadrez.pecas.Torre;
@@ -196,9 +197,11 @@ public class Partida {
     }
 
     private void iniciarPartida() {
-        colocarNovaPeca('c', 1, new Torre(tabuleiro, Cor.BRANCO));
-        colocarNovaPeca('e', 1, new Torre(tabuleiro, Cor.BRANCO));
-        colocarNovaPeca('d', 1, new Rei(tabuleiro, Cor.BRANCO));
+        colocarNovaPeca('a', 1, new Torre(tabuleiro, Cor.BRANCO));
+        colocarNovaPeca('c', 1, new Bispo(tabuleiro, Cor.BRANCO));
+        colocarNovaPeca('e', 1, new Rei(tabuleiro, Cor.BRANCO));
+        colocarNovaPeca('f', 1, new Bispo(tabuleiro, Cor.BRANCO));
+        colocarNovaPeca('h', 1, new Torre(tabuleiro, Cor.BRANCO));
         colocarNovaPeca('a', 2, new Peao(tabuleiro, Cor.BRANCO));
         colocarNovaPeca('b', 2, new Peao(tabuleiro, Cor.BRANCO));
         colocarNovaPeca('c', 2, new Peao(tabuleiro, Cor.BRANCO));
@@ -208,9 +211,11 @@ public class Partida {
         colocarNovaPeca('g', 2, new Peao(tabuleiro, Cor.BRANCO));
         colocarNovaPeca('h', 2, new Peao(tabuleiro, Cor.BRANCO));
 
-        colocarNovaPeca('c', 8, new Torre(tabuleiro, Cor.PRETO));
-        colocarNovaPeca('e', 8, new Torre(tabuleiro, Cor.PRETO));
-        colocarNovaPeca('d', 8, new Rei(tabuleiro, Cor.PRETO));
+        colocarNovaPeca('a', 8, new Torre(tabuleiro, Cor.PRETO));
+        colocarNovaPeca('c', 8, new Bispo(tabuleiro, Cor.PRETO));
+        colocarNovaPeca('e', 8, new Rei(tabuleiro, Cor.PRETO));
+        colocarNovaPeca('f', 8, new Bispo(tabuleiro, Cor.PRETO));
+        colocarNovaPeca('h', 8, new Torre(tabuleiro, Cor.PRETO));
         colocarNovaPeca('a', 7, new Peao(tabuleiro, Cor.PRETO));
         colocarNovaPeca('b', 7, new Peao(tabuleiro, Cor.PRETO));
         colocarNovaPeca('c', 7, new Peao(tabuleiro, Cor.PRETO));
