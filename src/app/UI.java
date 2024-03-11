@@ -57,9 +57,14 @@ public interface UI {
         imprimirPecasCapturadas(capturadas);
         System.out.println();
         System.out.println("Turno: " + partida.getTurno());
-        System.out.println("Aguardando jogador: " + partida.getJogadorAtual());
-        if (partida.getXeque()) {
-        System.out.print("XEQUE!");
+        if (!partida.getXequemate()) {
+            System.out.println("Aguardando jogador: " + partida.getJogadorAtual());
+            if (partida.getXeque()) {
+                System.out.print("XEQUE!");
+            }
+        } else {
+            System.out.println("XEQUEMATE!");
+            System.out.println("Vencedor: " + partida.getJogadorAtual());
         }
     }
 
