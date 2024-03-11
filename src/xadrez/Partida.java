@@ -23,6 +23,7 @@ public class Partida {
     private int turno;
     private Cor jogadorAtual;
     private boolean xeque;
+    private boolean xequemate;
 
     private List<Peca> pecasNoTabuleiro = new ArrayList<>();
     private List<Peca> pecasCapturadas = new ArrayList<>();
@@ -44,6 +45,10 @@ public class Partida {
 
     public boolean getXeque() {
         return xeque;
+    }
+
+    public boolean getXequemate() {
+        return xequemate;
     }
 
     public PecaDeXadrez[][] getPecas() {
@@ -76,7 +81,12 @@ public class Partida {
 
         xeque = (testeXeque(oponente(jogadorAtual))) ? true : false;
 
-        proximoTurno();
+        if (testeXequemate(oponente(jogadorAtual))) {
+            xequemate = true;
+        } else {
+            proximoTurno();
+        }
+
         return (PecaDeXadrez)pecaCapturada;
     }
 
@@ -150,6 +160,31 @@ public class Partida {
             }
         }
         return false;
+    }
+
+    private boolean testeXequemate(Cor cor) {
+        if (!testeXeque(cor)) {
+            return false;
+        }
+        List<Peca> lista = pecasNoTabuleiro.stream().filter(x -> ((PecaDeXadrez)x).getCor() == cor).collect(Collectors.toList());
+        for (Peca p : lista) {
+            boolean[][] mat = p.movimentosPossiveis();
+            for (int i = 0; i < tabuleiro.getLinhas(); i++) {
+                for (int j = 0; j < tabuleiro.getColunas(); j++) {
+                    if (mat[i][j]) {
+                        Posicao inicial = ((PecaDeXadrez)p).getPosicaoDeXadrez().posicionar();
+                        Posicao alvo = new Posicao(i, j);
+                        Peca pecaCapturada = fazerMovimento(inicial, alvo);
+                        boolean testeXeque = testeXeque(cor);
+                        desfazerMovimento(inicial, alvo, pecaCapturada);
+                        if (!testeXeque) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     private void colocarNovaPeca(char coluna, int linha, PecaDeXadrez peca) {
