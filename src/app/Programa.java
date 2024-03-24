@@ -5,6 +5,7 @@ import xadrez.PecaDeXadrez;
 import xadrez.PosicaoDeXadrez;
 import xadrez.XadrezException;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -42,7 +43,11 @@ public class Programa {
 
                 if (partida.getPromovida() != null) {
                     System.out.print("Informe a peça para promoção (B/C/T/Q): ");
-                    String tipo = scanner.nextLine();
+                    String tipo = scanner.nextLine().toUpperCase();
+                    while (!tipo.equals("B") && !tipo.equals("C") && !tipo.equals("T") && !tipo.equals("Q")) {
+                        System.out.print("Valor inválido! Informe a peça para promoção(B/C/T/Q): ");
+                        tipo = scanner.nextLine().toUpperCase();
+                    }
                     partida.substituirPromovida(tipo);
                 }
             } catch (XadrezException e) {
