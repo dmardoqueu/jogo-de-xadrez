@@ -3,7 +3,7 @@
 
 # Sobre o projeto
 Neste projeto de xadrez em Java, tive a oportunidade de trabalhar com vários conceitos fundamentais de programação orientada a
-objetos (POO) e da linguagem Java.
+objetos (POO) e da linguagem.
 
 Conceitos principais que foram explorados:
 
